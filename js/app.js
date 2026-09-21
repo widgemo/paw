@@ -104,7 +104,8 @@ const APP_META_DEFAULT = Object.freeze({
   byline: 'by Widgemo',
   version: '0.3.2',
   copyright: 'Copyright (c) 2026 Widgemo. All rights reserved.',
-  feedbackUrl: 'https://github.com/widgemo/paw/issues/new/choose'
+  feedbackUrl: 'https://github.com/widgemo/paw/issues/new/choose',
+  websiteUrl: 'https://widgemo.com'
 });
 const REMEMBER_DEFAULT = Object.freeze({
   content: true,
@@ -122,6 +123,7 @@ function sanitizeAppMeta(raw) {
   if (typeof raw.version === 'string' && raw.version.trim()) meta.version = raw.version.trim();
   if (typeof raw.copyright === 'string' && raw.copyright.trim()) meta.copyright = raw.copyright.trim();
   if (typeof raw.feedbackUrl === 'string' && raw.feedbackUrl.trim()) meta.feedbackUrl = raw.feedbackUrl.trim();
+  if (typeof raw.websiteUrl === 'string' && raw.websiteUrl.trim()) meta.websiteUrl = raw.websiteUrl.trim();
   return meta;
 }
 
@@ -3485,10 +3487,10 @@ class Component extends DCLogic {
       onToggleAbout: () => this.setState(s => ({ showAbout: !s.showAbout, showHelp: false, showSettings: false })),
       aboutAppName: appMeta.appName,
       aboutTagline: appMeta.tagline,
-      aboutByline: appMeta.byline,
       aboutVersion: appMeta.version,
       aboutCopyright: appMeta.copyright,
       aboutFeedbackUrl: appMeta.feedbackUrl,
+      aboutWebsiteUrl: appMeta.websiteUrl,
       formatGridClass, sourcePanelClass, explorerPanelClass,
       sourceFullscreenLabel: S.fullscreenPanel === 'source' ? 'Exit fullscreen' : 'Fullscreen',
       explorerFullscreenLabel: S.fullscreenPanel === 'explorer' ? 'Exit fullscreen' : 'Fullscreen',
