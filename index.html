@@ -166,7 +166,7 @@
         <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onUploadClick }}">{{ iconUpload }}Upload file</button>
         <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onSample }}">{{ iconFileDoc }}Sample</button>
         <div style="flex:1"></div>
-        <button title="Copy" aria-label="Copy" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopySource }}">{{ iconCopy }}</button>
+        <button title="Copy" aria-label="Copy" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopySource }}">{{ iconCopy }}{{ copyLabel }}</button>
         {{ sourceSendMenuEl }}
         <button title="Share" aria-label="Share" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onShare }}">{{ iconShare }}</button>
         <button title="Download" aria-label="Download" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDownload }}">{{ iconDownload }}</button>
@@ -234,7 +234,7 @@
           <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCollapseAll }}">{{ iconCollapse }}Collapse all</button>
         </sc-if>
         <div style="{{ explorerActionsStyle }}">
-          <button title="{{ explorerCopyTitle }}" aria-label="{{ explorerCopyTitle }}" style="{{ explorerCopyStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopyExplorer }}">{{ iconCopy }}</button>
+          <button title="{{ explorerCopyTitle }}" aria-label="{{ explorerCopyTitle }}" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopyExplorer }}">{{ iconCopy }}{{ explorerCopyLabel }}</button>
           {{ explorerSendMenuEl }}
           <button title="{{ explorerFullscreenLabel }}" aria-label="{{ explorerFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onExplorerFullscreen }}">{{ explorerFullscreenIcon }}</button>
         </div>
@@ -305,11 +305,12 @@
         <div class="rf-sanitize-panel-header" style="display:flex;align-items:center;gap:7px;padding:8px 10px;border-bottom:1px solid var(--border,#e3e6ef);background:var(--panel-2,#f0f2f8);flex-wrap:wrap">
           <span style="font:600 11px/1 var(--font-ui);letter-spacing:.04em;color:var(--text-faint,#9096ac);text-transform:uppercase">Version A</span>
           {{ spotALibraryMenuEl }}
-          <div style="flex:1"></div>
           <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDiffAUploadClick }}">{{ iconUpload }}Upload file</button>
           <input type="file" ref="{{ diffAFileRef }}" onchange="{{ onDiffAUpload }}" accept=".json,.xml,.txt,application/json,text/xml,application/xml" style="display:none">
-          <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onDiffAClear }}">{{ iconTrash }}</button>
+          <div style="flex:1"></div>
+          <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopyDiffA }}">{{ iconCopy }}{{ diffACopyLabel }}</button>
           {{ diffASendMenuEl }}
+          <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onDiffAClear }}">{{ iconTrash }}</button>
           <button title="{{ diffAFullscreenLabel }}" aria-label="{{ diffAFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDiffAFullscreen }}">{{ diffAFullscreenIcon }}</button>
         </div>
         <div ref="{{ diffADropRef }}" ondragover="{{ onDiffADragOver }}" ondragleave="{{ onDiffADragLeave }}" ondrop="{{ onDiffADrop }}" style="flex:1;min-height:0;position:relative;overflow:hidden">
@@ -321,11 +322,12 @@
         <div class="rf-sanitize-panel-header" style="display:flex;align-items:center;gap:7px;padding:8px 10px;border-bottom:1px solid var(--border,#e3e6ef);background:var(--panel-2,#f0f2f8);flex-wrap:wrap">
           <span style="font:600 11px/1 var(--font-ui);letter-spacing:.04em;color:var(--text-faint,#9096ac);text-transform:uppercase">Version B</span>
           {{ spotBLibraryMenuEl }}
-          <div style="flex:1"></div>
           <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDiffBUploadClick }}">{{ iconUpload }}Upload file</button>
           <input type="file" ref="{{ diffBFileRef }}" onchange="{{ onDiffBUpload }}" accept=".json,.xml,.txt,application/json,text/xml,application/xml" style="display:none">
-          <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onDiffBClear }}">{{ iconTrash }}</button>
+          <div style="flex:1"></div>
+          <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopyDiffB }}">{{ iconCopy }}{{ diffBCopyLabel }}</button>
           {{ diffBSendMenuEl }}
+          <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onDiffBClear }}">{{ iconTrash }}</button>
           <button title="{{ diffBFullscreenLabel }}" aria-label="{{ diffBFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDiffBFullscreen }}">{{ diffBFullscreenIcon }}</button>
         </div>
         <div ref="{{ diffBDropRef }}" ondragover="{{ onDiffBDragOver }}" ondragleave="{{ onDiffBDragLeave }}" ondrop="{{ onDiffBDrop }}" style="flex:1;min-height:0;position:relative;overflow:hidden">
@@ -360,8 +362,6 @@
       <div style="flex:1"></div>
       {{ sanitizeProfileSelectorEl }}
       <button title="Lock/unlock scrolling both panes together" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onToggleSanitizeScrollLock }}">{{ sanitizeScrollLockIcon }}{{ sanitizeScrollLockLabel }}</button>
-      <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeSample }}">{{ iconFileDoc }}Sample</button>
-      <button style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeClear }}">{{ iconTrash }}Clear</button>
       <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onToggleSanitizeRules }}">{{ iconSettings }}Rules</button>
     </div>
 
@@ -389,11 +389,13 @@
         <div class="rf-sanitize-panel-header" style="display:flex;align-items:center;gap:7px;padding:8px 10px;border-bottom:1px solid var(--border,#e3e6ef);background:var(--panel-2,#f0f2f8);flex-wrap:wrap">
           <span style="font:600 11px/1 var(--font-ui);letter-spacing:.04em;color:var(--text-faint,#9096ac);text-transform:uppercase">Input</span>
           {{ buryLibraryMenuEl }}
-          <div style="flex:1"></div>
           <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onBuryUploadClick }}">{{ iconUpload }}Upload file</button>
           <input type="file" ref="{{ buryFileRef }}" onchange="{{ onBuryUpload }}" accept=".json,.xml,.txt,application/json,text/xml,application/xml" style="display:none">
-          <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeInputClear }}">{{ iconTrash }}</button>
+          <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeSample }}">{{ iconFileDoc }}Sample</button>
+          <div style="flex:1"></div>
+          <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopySanitizeInput }}">{{ iconCopy }}{{ sanitizeInputCopyLabel }}</button>
           {{ sanitizeInputSendMenuEl }}
+          <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeInputClear }}">{{ iconTrash }}</button>
           <button title="{{ sanitizeInputFullscreenLabel }}" aria-label="{{ sanitizeInputFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeInputFullscreen }}">{{ sanitizeInputFullscreenIcon }}</button>
         </div>
         <div ref="{{ buryDropRef }}" ondragover="{{ onBuryDragOver }}" ondragleave="{{ onBuryDragLeave }}" ondrop="{{ onBuryDrop }}" style="flex:1;min-height:0;position:relative;overflow:hidden">
