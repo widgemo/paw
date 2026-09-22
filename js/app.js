@@ -1303,6 +1303,23 @@ class Component extends DCLogic {
     return true;
   }
 
+  // Downloads arbitrary text as a file, auto-detecting extension/mime type
+  // from its content (same JSON/XML/table detection every Copy button's
+  // content already goes through via parse()) rather than assuming JSON.
+  downloadText(content, baseName) {
+    const p = this.parse(content == null ? '' : String(content));
+    const isXml = p.format === 'xml';
+    const isTable = p.format === 'table' && p.ok;
+    const ext = isXml ? 'xml' : isTable ? (p.tableMeta.kind === 'md' ? 'md' : p.tableMeta.kind === 'tsv' ? 'tsv' : 'csv') : 'json';
+    const mime = isXml ? 'text/xml' : isTable ? 'text/csv' : 'application/json';
+    const blob = new Blob([content == null ? '' : String(content)], { type: mime });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = baseName + '.' + ext;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
   // ---------- formatting ----------
   indentStr() { return this.state.indent === 'tab' ? '\t' : (this.state.indent === '4' ? '    ' : '  '); }
 
@@ -3070,7 +3087,6 @@ class Component extends DCLogic {
     const isJson = parsed.format === 'json';
     const isXml = parsed.format === 'xml';
     const isTable = parsed.format === 'table';
-    const tableExt = isTable && parsed.ok ? (parsed.tableMeta.kind === 'md' ? 'md' : parsed.tableMeta.kind === 'tsv' ? 'tsv' : 'csv') : null;
     const heavy = S.input.length > 120000;
 
     // status
@@ -3499,6 +3515,7 @@ class Component extends DCLogic {
       onSourceFullscreen: () => this.setState(s => ({ fullscreenPanel: s.fullscreenPanel === 'source' ? null : 'source' })),
       onExplorerFullscreen: () => this.setState(s => ({ fullscreenPanel: s.fullscreenPanel === 'explorer' ? null : 'explorer' })),
       onCopyExplorer: () => this.copy(explorerCopyPayloadText, '__explorer'),
+      onDownloadExplorer: () => this.downloadText(explorerCopyPayloadText, 'document'),
       explorerSendMenuEl,
       explorerCopyTitle: (searchFilterActive || queryFilterActive) ? 'Copy filtered payload' : 'Copy payload',
       explorerCopyLabel: S.copied === '__explorer' ? 'Copied ✓' : 'Copy',
@@ -3549,7 +3566,7 @@ class Component extends DCLogic {
       onCopySource: () => this.copy(S.input, '__src'), copyLabel: S.copied === '__src' ? 'Copied ✓' : 'Copy',
       sourceSendMenuEl,
       digLibraryMenuEl,
-      onDownload: () => { const blob = new Blob([S.input], { type: isXml ? 'text/xml' : isTable ? 'text/csv' : 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'document.' + (isXml ? 'xml' : tableExt || 'json'); a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); },
+      onDownload: () => this.downloadText(S.input, 'document'),
       onClear: () => { this.applyInput('', { collapsed: new Set(), search: '', query: '' }); this.unlinkSlot('dig'); },
       onDragOver: (e) => { e.preventDefault(); if (!S.dragging) this.setState({ dragging: true }); },
       onDragLeave: (e) => { e.preventDefault(); this.setState({ dragging: false }); },
@@ -3617,6 +3634,7 @@ class Component extends DCLogic {
       onDiffAChange: (e) => this.updateDiffSlot('spotA', e.target.value), onDiffBChange: (e) => this.updateDiffSlot('spotB', e.target.value),
       onDiffAClear: () => { this.setState({ diffA: '' }); this.unlinkSlot('spotA'); }, onDiffBClear: () => { this.setState({ diffB: '' }); this.unlinkSlot('spotB'); },
       onCopyDiffA: () => this.copy(S.diffA, '__diffA'), onCopyDiffB: () => this.copy(S.diffB, '__diffB'),
+      onDownloadDiffA: () => this.downloadText(S.diffA, 'version-a'), onDownloadDiffB: () => this.downloadText(S.diffB, 'version-b'),
       diffACopyLabel: S.copied === '__diffA' ? 'Copied ✓' : 'Copy', diffBCopyLabel: S.copied === '__diffB' ? 'Copied ✓' : 'Copy',
       onDiffBeautify: () => { const nb = t => { const p = this.parse(t); return p.ok && p.format === 'json' ? JSON.stringify(p.value, null, 2) : (p.ok && p.format === 'xml' ? this.prettyXml(p.doc) : t); }; this.setState({ diffA: nb(S.diffA), diffB: nb(S.diffB) }); },
       onDiffSwap: () => this.setState(prevState => ({ diffA: prevState.diffB, diffB: prevState.diffA })),
@@ -3710,10 +3728,12 @@ class Component extends DCLogic {
       onSanitizeInputClear: () => { this.setSanitizeInput(''); this.unlinkSlot('bury'); },
       onCopySanitizeInput: () => this.copy(S.sanitizeInput, '__sanitizeInput'),
       sanitizeInputCopyLabel: S.copied === '__sanitizeInput' ? 'Copied ✓' : 'Copy',
+      onDownloadSanitizeInput: () => this.downloadText(S.sanitizeInput, 'input'),
       sanitizeProfileSelectorEl,
       sanitizeOutput,
       onCopySanitizeOutput: () => this.copy(sanitizeOutput, '__sanitize'),
       sanitizeCopyLabel: S.copied === '__sanitize' ? 'Copied ✓' : 'Copy',
+      onDownloadSanitizeOutput: () => this.downloadText(sanitizeOutput, 'sanitized'),
       sanitizeMatchesEl,
       sanitizeMatchCount: sanitizeMatches.length,
       sanitizeMappedCount: this.getSanitizeMapping().map.size,
