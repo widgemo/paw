@@ -236,6 +236,7 @@
         <div style="{{ explorerActionsStyle }}">
           <button title="{{ explorerCopyTitle }}" aria-label="{{ explorerCopyTitle }}" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopyExplorer }}">{{ iconCopy }}{{ explorerCopyLabel }}</button>
           {{ explorerSendMenuEl }}
+          <button title="Download" aria-label="Download" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDownloadExplorer }}">{{ iconDownload }}</button>
           <button title="{{ explorerFullscreenLabel }}" aria-label="{{ explorerFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onExplorerFullscreen }}">{{ explorerFullscreenIcon }}</button>
         </div>
       </div>
@@ -310,6 +311,7 @@
           <div style="flex:1"></div>
           <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopyDiffA }}">{{ iconCopy }}{{ diffACopyLabel }}</button>
           {{ diffASendMenuEl }}
+          <button title="Download" aria-label="Download" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDownloadDiffA }}">{{ iconDownload }}</button>
           <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onDiffAClear }}">{{ iconTrash }}</button>
           <button title="{{ diffAFullscreenLabel }}" aria-label="{{ diffAFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDiffAFullscreen }}">{{ diffAFullscreenIcon }}</button>
         </div>
@@ -327,6 +329,7 @@
           <div style="flex:1"></div>
           <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopyDiffB }}">{{ iconCopy }}{{ diffBCopyLabel }}</button>
           {{ diffBSendMenuEl }}
+          <button title="Download" aria-label="Download" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDownloadDiffB }}">{{ iconDownload }}</button>
           <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onDiffBClear }}">{{ iconTrash }}</button>
           <button title="{{ diffBFullscreenLabel }}" aria-label="{{ diffBFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDiffBFullscreen }}">{{ diffBFullscreenIcon }}</button>
         </div>
@@ -395,6 +398,7 @@
           <div style="flex:1"></div>
           <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopySanitizeInput }}">{{ iconCopy }}{{ sanitizeInputCopyLabel }}</button>
           {{ sanitizeInputSendMenuEl }}
+          <button title="Download" aria-label="Download" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDownloadSanitizeInput }}">{{ iconDownload }}</button>
           <button title="Clear" aria-label="Clear" style="{{ btnGhost }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeInputClear }}">{{ iconTrash }}</button>
           <button title="{{ sanitizeInputFullscreenLabel }}" aria-label="{{ sanitizeInputFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeInputFullscreen }}">{{ sanitizeInputFullscreenIcon }}</button>
         </div>
@@ -411,6 +415,7 @@
           <div style="flex:1"></div>
           <button style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onCopySanitizeOutput }}">{{ iconCopy }}{{ sanitizeCopyLabel }}</button>
           {{ sanitizeOutputSendMenuEl }}
+          <button title="Download" aria-label="Download" style="{{ btnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onDownloadSanitizeOutput }}">{{ iconDownload }}</button>
           <button title="{{ sanitizeOutputFullscreenLabel }}" aria-label="{{ sanitizeOutputFullscreenLabel }}" style="{{ fsBtnStyle }}" style-hover="{{ btnHover }}" onclick="{{ onSanitizeOutputFullscreen }}">{{ sanitizeOutputFullscreenIcon }}</button>
         </div>
         <div style="flex:1;min-height:0;position:relative;overflow:hidden">
